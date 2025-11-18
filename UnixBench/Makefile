@@ -119,7 +119,8 @@ endif
 
 
 ## generic gcc CFLAGS.  -DTIME must be included.
-CFLAGS += -Wall -pedantic $(OPTON) -I $(SRCDIR) -DTIME
+override CFLAGS += -Wall -pedantic $(OPTON) -I $(SRCDIR) -DTIME
+override LDFLAGS += ""
 
 
 ##############################################################################
@@ -142,7 +143,8 @@ SOURCES = arith.c big.c context1.c \
 	fstime.c hanoi.c \
 	pipe.c spawn.c \
 	syscall.c looper.c timeit.c time-polling.c \
-	dhry_1.c dhry_2.c dhry.h whets.c ubgears.c
+	dhry_1.c dhry_2.c dhry.h whets.c ubgears.c \
+   execute.c
 TESTS = sort.src cctest.c dc.dat large.txt
 
 ifneq (,$(GRAPHIC_TESTS))
@@ -157,7 +159,8 @@ BINS = $(PROGDIR)/arithoh $(PROGDIR)/register $(PROGDIR)/short \
 	$(PROGDIR)/hanoi $(PROGDIR)/syscall $(PROGDIR)/context1 \
 	$(PROGDIR)/pipe $(PROGDIR)/spawn $(PROGDIR)/execl \
 	$(PROGDIR)/dhry2 $(PROGDIR)/dhry2reg  $(PROGDIR)/looper \
-	$(PROGDIR)/fstime $(PROGDIR)/whetstone-double $(GRAPHIC_BINS)
+	$(PROGDIR)/fstime $(PROGDIR)/whetstone-double $(GRAPHIC_BINS) \
+   $(PROGDIR)/execute
 ## These compile only on some platforms...
 # $(PROGDIR)/poll $(PROGDIR)/poll2 $(PROGDIR)/select
 
@@ -286,12 +289,13 @@ $(PROGDIR)/ubgears: LDFLAGS += -lm $(GL_LIBS)
 $(PROGDIR)/dhry2: CFLAGS += -DHZ=${HZ}
 $(PROGDIR)/dhry2: $(SRCDIR)/dhry_1.c $(SRCDIR)/dhry_2.c \
                   $(SRCDIR)/dhry.h $(SRCDIR)/timeit.c
-	$(CC) -o $@ ${CFLAGS} $(SRCDIR)/dhry_1.c $(SRCDIR)/dhry_2.c
+	$(CC) -o $@ ${CFLAGS} $(SRCDIR)/dhry_1.c $(SRCDIR)/dhry_2.c $(LDFLAGS)
 
 $(PROGDIR)/dhry2reg: CFLAGS += -DHZ=${HZ} -DREG=register
 $(PROGDIR)/dhry2reg: $(SRCDIR)/dhry_1.c $(SRCDIR)/dhry_2.c \
                      $(SRCDIR)/dhry.h $(SRCDIR)/timeit.c
-	$(CC) -o $@ ${CFLAGS} $(SRCDIR)/dhry_1.c $(SRCDIR)/dhry_2.c
+	$(CC) -o $@ ${CFLAGS} $(SRCDIR)/dhry_1.c $(SRCDIR)/dhry_2.c $(LDFLAGS)
+$(PROGDIR)/execute: $(SRCDIR)/execute.c
 
 # Run the benchmarks and create the reports
 run:
