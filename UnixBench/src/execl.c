@@ -39,9 +39,7 @@ char	bss[8*1024];	/* something worthwhile */
 char *getenv();
 
 
-int main(argc, argv)	/* the real program */
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
 {
 	unsigned long iter = 0;
 	char *ptr;

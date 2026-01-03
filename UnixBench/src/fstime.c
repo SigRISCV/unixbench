@@ -97,9 +97,7 @@ int                     sigalarm = 0;
 
 /******************** MAIN ****************************/
 
-int main(argc, argv)
-int     argc;
-char    *argv[];
+int main(int argc, char * __raw argv[])
 {
     /* The number of seconds to run for. */
     int                     seconds = SECONDS;

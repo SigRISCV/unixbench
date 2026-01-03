@@ -50,9 +50,7 @@ int create_fd()
 	return fd[0];
 }
 
-int main(argc, argv)
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
 {
         char   *test;
 	int	duration;

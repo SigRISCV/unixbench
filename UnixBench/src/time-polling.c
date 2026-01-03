@@ -345,9 +345,7 @@ static void time_poll2 (struct poll2ifd *poll2ifd_array, int start_index,
 #endif  /* HAS_POLL2 */
 
 
-int main (argc, argv)
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
 {
     flag failed = FALSE;
     flag verbose = FALSE;

@@ -105,9 +105,7 @@ extern void Proc_6(Enumeration, Enumeration *);
 extern void Proc_7(One_Fifty, One_Fifty, One_Fifty *);
 extern void Proc_8(Arr_1_Dim, Arr_2_Dim, int, int);
 
-int main (argc, argv)
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
   /* main program, corresponds to procedures        */
   /* Main and Proc_0 in the Ada version             */
 {

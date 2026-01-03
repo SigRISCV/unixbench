@@ -551,7 +551,7 @@ event_loop(Display *dpy, Window win)
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char * __raw argv[])
 {
    Bool           use_threadsafe_api = False;
    Display       *dpy;

@@ -35,9 +35,7 @@ void report()
 	exit(0);
 }
 
-int main(argc, argv)
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
 {
 	int	slave, duration;
 	int	status;

@@ -30,8 +30,7 @@ char buf[BUFSIZ];
 extern void exit(int status);
 
 
-main(argc, argv)
-char **argv;
+main(int argc, char * __raw argv[])
 {
     int		n = NKBYTE;
     int		nblock;

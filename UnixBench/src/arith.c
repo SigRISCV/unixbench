@@ -46,7 +46,7 @@ void report()
 
 int main(argc, argv)
 int	argc;
-char	*argv[];
+char	* __raw argv[];
 {
 	int	duration;
 	int result = 0;

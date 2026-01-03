@@ -60,9 +60,7 @@ struct {
 	int	thisjob;	/* current piece of work */
 } child[MAXCHILD], *cp;
 
-main(argc, argv)
-int	argc;
-char	*argv[];
+main(int argc, char * __raw argv[])
 {
     int		i;
     int		l;

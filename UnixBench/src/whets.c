@@ -325,9 +325,7 @@ structions
  static SPDP Check;
  static SPDP results[9];
 
-int main(argc, argv)
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
 {
     int count = 10, calibrate = 1;
     long xtra = 1;

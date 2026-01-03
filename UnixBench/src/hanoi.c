@@ -37,9 +37,7 @@ void report()
 }
 
 
-int main(argc, argv)
-int	argc;
-char	*argv[];
+int main(int argc, char * __raw argv[])
 {
 	int disk=10, /* default number of disks */
          duration;
