@@ -27,15 +27,8 @@ char SCCSid[] = "@(#) @(#)looper.c:1.4 -- 5/15/91 19:30:22";
 #include <sys/wait.h>
 #include "timeit.c"
 
-unsigned long iter;
-char *cmd_argv[28];
+char * __raw cmd_argv[28];
 int  cmd_argc;
-
-void report(void)
-{
-        fprintf(stderr,"COUNT|%lu|60|lpm\n", iter);
-	exit(0);
-}
 
 int main(int argc, char * __raw argv[])
 {
@@ -69,7 +62,7 @@ exit(0);
 #endif
 
 iter = 0;
-wake_me(duration, report);
+wake_me(duration, minute_report);
 
 while (1)
 	{

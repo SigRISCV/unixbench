@@ -35,10 +35,6 @@ char	bss[8*1024];	/* something worthwhile */
 
 #undef main
 
-/* added by BYTE */
-char *getenv();
-
-
 int main(int argc, char * __raw argv[])
 {
 	unsigned long iter = 0;

@@ -32,14 +32,6 @@ char SCCSid[] = "@(#) @(#)syscall.c:3.3 -- 5/15/91 19:30:21";
 #include <unistd.h>
 #include "timeit.c"
 
-unsigned long iter;
-
-void report()
-{
-	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
-	exit(0);
-}
-
 int create_fd()
 {
 	int fd[2];
@@ -70,7 +62,7 @@ int main(int argc, char * __raw argv[])
 	duration = atoi(argv[1]);
 
 	iter = 0;
-	wake_me(duration, report);
+	wake_me(duration, second_report);
 
         switch (test[0]) {
         case 'm':

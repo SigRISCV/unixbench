@@ -39,6 +39,7 @@ char SCCSid[] = "@(#) @(#)fstime.c:3.5 -- 5/15/91 19:30:19";
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/time.h>
+#include "rawcode.h"
 
 #define SECONDS 10
 
@@ -47,9 +48,6 @@ char SCCSid[] = "@(#) @(#)fstime.c:3.5 -- 5/15/91 19:30:19";
 /* This must be set to the smallest BUFSIZE or 1024, whichever is smaller */
 #define COUNTSIZE 256
 #define HALFCOUNT (COUNTSIZE/2)         /* Half of COUNTSIZE */
-
-char FNAME0[] = "dummy0-XXXXXXXXXX";
-char FNAME1[] = "dummy1-XXXXXXXXXX";
 
 int w_test(int timeSecs);
 int r_test(int timeSecs);
@@ -91,9 +89,6 @@ char buf[MAX_BUFSIZE];
 int                     f;
 int                     g;
 int                     i;
-void                    stop_count();
-void                    clean_up();
-int                     sigalarm = 0;
 
 /******************** MAIN ****************************/
 
@@ -453,16 +448,4 @@ int c_test(int timeSecs)
         fprintf(stderr, "TIME|%.1f\n", end - start);
 
         return(0);
-}
-
-void stop_count(void)
-{
-        extern int sigalarm;
-        sigalarm = 1;
-}
-
-void clean_up(void)
-{
-        unlink(FNAME0);
-        unlink(FNAME1);
 }

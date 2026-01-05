@@ -35,15 +35,6 @@ char SCCSid[] = "@(#) @(#)arith.c:3.3 -- 5/15/91 19:30:19";
 
 int dumb_stuff(int);
 
-volatile unsigned long iter;
-
-/* this function is called when the alarm expires */
-void report()
-{
-	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
-	exit(0);
-}
-
 int main(argc, argv)
 int	argc;
 char	* __raw argv[];
@@ -60,7 +51,7 @@ char	* __raw argv[];
 
 	/* set up alarm call */
 	iter = 0;	/* init iteration count */
-	wake_me(duration, report);
+	wake_me(duration, second_report);
 
 	/* this loop will be interrupted by the alarm call */
 	while (1)

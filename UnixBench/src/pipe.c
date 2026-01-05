@@ -27,14 +27,6 @@ char SCCSid[] = "@(#) @(#)pipe.c:3.3 -- 5/15/91 19:30:20";
 #include <errno.h>
 #include "timeit.c"
 
-unsigned long iter;
-
-void report()
-{
-	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
-	exit(0);
-}
-
 int main(int argc, char * __raw argv[])
 {
 	char	buf[512];
@@ -49,7 +41,7 @@ int main(int argc, char * __raw argv[])
 
 	pipe(pvec);
 
-	wake_me(duration, report);
+	wake_me(duration, second_report);
 	iter = 0;
 
 	while (1) {

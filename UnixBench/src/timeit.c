@@ -28,10 +28,11 @@
 
 #include <signal.h>
 #include <unistd.h>
+#include "rawcode.h"
 
 void wake_me(seconds, func)
 	int seconds;
-	void (*func)();
+	__raw void (*func)();
 {
 	/* set up the signal handler */
 	signal(SIGALRM, func);

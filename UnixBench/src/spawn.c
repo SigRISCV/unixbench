@@ -27,14 +27,6 @@ char SCCSid[] = "@(#) @(#)spawn.c:3.3 -- 5/15/91 19:30:20";
 #include <sys/wait.h>
 #include "timeit.c"
 
-unsigned long iter;
-
-void report()
-{
-	fprintf(stderr,"COUNT|%lu|1|lps\n", iter);
-	exit(0);
-}
-
 int main(int argc, char * __raw argv[])
 {
 	int	slave, duration;
@@ -48,7 +40,7 @@ int main(int argc, char * __raw argv[])
 	duration = atoi(argv[1]);
 
 	iter = 0;
-	wake_me(duration, report);
+	wake_me(duration, second_report);
 
 	while (1) {
 		if ((slave = fork()) == 0) {

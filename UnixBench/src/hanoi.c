@@ -26,16 +26,8 @@ char SCCSid[] = "@(#) @(#)hanoi.c:3.3 -- 5/15/91 19:30:20";
 
 void mov(int n, int f, int t);
 
-unsigned long iter = 0;
 int num[4];
 long cnt;
-
-void report()
-{
-	fprintf(stderr,"COUNT|%ld|1|lps\n", iter);
-	exit(0);
-}
-
 
 int main(int argc, char * __raw argv[])
 {
@@ -50,7 +42,7 @@ int main(int argc, char * __raw argv[])
 	if(argc > 2) disk = atoi(argv[2]);
 	num[1] = disk;
 
-	wake_me(duration, report);
+	wake_me(duration, second_report);
 
 	while(1) {
 		mov(disk,1,3);
