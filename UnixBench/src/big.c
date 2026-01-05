@@ -37,54 +37,29 @@
 #include <time.h>
 #include <string.h>
 #include <sys/wait.h>
+#include "rawcode.h"
 
-
-#define DEF_RATE	5.0
-#define GRANULE		5
-#define CHUNK		60
-#define MAXCHILD	12
-#define MAXWORK		10
-
-void	wrapup(const char *);
-void	onalarm(int);
-void	pipeerr();
-void	grunt();
 void getwork(void);
 #if debug
 void dumpwork(void);
 #endif
 void fatal(const char *s);
 
-float	thres;
-float	est_rate = DEF_RATE;
-int	nusers;		/* number of concurrent users to be simulated by
-			 * this process */
-int	firstuser;	/* ordinal identification of first user for this
-			 * process */
 int	nwork = 0;	/* number of job streams */
-int	exit_status = 0;	/* returned to parent */
-int	sigpipe;	/* pipe write error flag */
 
 struct st_work {
 	char	*cmd;		/* name of command to run */
-	char	**av;		/* arguments to command */
+	char	* __raw *av;		/* arguments to command */
 	char	*input;		/* standard input buffer */
 	int	inpsize;	/* size of standard input buffer */
 	char	*outf;		/* standard output (filename) */
 } work[MAXWORK];
 
-struct {
-	int	xmit;	/* # characters sent */
-	char	*bp;	/* std input buffer pointer */
-	int	blen;	/* std input buffer length */
-	int	fd;	/* stdin to command */
-	int	pid;	/* child PID */
-	char	*line;	/* start of input line */
-	int	firstjob;	/* inital piece of work */
-	int	thisjob;	/* current piece of work */
-} child[MAXCHILD], *cp;
+struct ChildInfo *cp;
 
-int main(int argc, char * __raw argv[])
+int main(argc, argv)
+int	argc;
+char	*argv[];
 {
     int		i;
     int		l;
@@ -396,44 +371,6 @@ bepatient:
     exit(0);
 }
 
-void onalarm(int foo)
-{
-    thres += est_rate;
-    signal(SIGALRM, onalarm);
-    alarm(GRANULE);
-}
-
-void grunt()
-{
-    /* timeout after label "bepatient" in main */
-    exit_status = 4;
-    wrapup("Timed out waiting for jobs to finish ...");
-}
-
-void pipeerr()
-{
-	sigpipe++;
-}
-
-void wrapup(const char *reason)
-{
-    int i;
-    int killed = 0;
-    fflush(stderr);
-    for (i = 0; i < nusers; i++) {
-	if (child[i].pid > 0 && kill(child[i].pid, SIGKILL) != -1) {
-	    if (!killed) {
-		killed++;
-		fprintf(stderr, "%s\n", reason);
-		fflush(stderr);
-	    }
-	    fprintf(stderr, "user %d job %d pid %d killed off\n", firstuser+i, child[i].thisjob, child[i].pid);
-	fflush(stderr);
-	}
-    }
-    exit(exit_status);
-}
-
 #define MAXLINE 512
 void getwork(void)
 {
@@ -464,7 +401,7 @@ void getwork(void)
 	w->input = "";
 	/* start to build arg list */
 	ac = 2;
-	w->av = (char **)malloc(2*sizeof(char *));
+	w->av = (char * __raw *)malloc(2*sizeof(char *));
 	q = w->cmd;
 	while (*q) q++;
 	q--;
@@ -520,7 +457,7 @@ void getwork(void)
 	    else {
 		/* a command option */
 		ac++;
-		w->av = (char **)realloc(w->av, ac*sizeof(char *));
+		w->av = (char * __raw *)realloc(w->av, ac*sizeof(char *));
 		q = lp;
 		i = 1;
 		while (*lp && *lp != ' ') {
