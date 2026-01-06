@@ -64,6 +64,10 @@ int main(int argc, char * __raw argv[])
 		dur_str = argv[1];
 		if((ptr = getenv("UB_BINDIR")) != NULL)
 			sprintf(path_str,"%s/execl",ptr);
+		else {
+			perror("UB_BINDIR not set, cannot find execl");
+			exit(1);
+		}
 		fullpath=path_str;
 		time(&start_time);
 		}
