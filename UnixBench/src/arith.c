@@ -35,9 +35,7 @@ char SCCSid[] = "@(#) @(#)arith.c:3.3 -- 5/15/91 19:30:19";
 
 int dumb_stuff(int);
 
-int main(argc, argv)
-int	argc;
-char	* __raw argv[];
+int main(int argc, char * __raw argv[])
 {
 	int	duration;
 	int result = 0;
