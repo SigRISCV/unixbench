@@ -42,6 +42,12 @@ if (argc < 2)
 	exit(1);
 	}
 
+if (argc < 3)
+	{
+	fprintf(stderr,"%s: Missing command to execute\n", argv[0]);
+	exit(1);
+	}
+
 if((duration = atoi(argv[1])) < 1)
 	{
 	fprintf(stderr,"Usage: %s duration command [arg..]\n", argv[0]);
