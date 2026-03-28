@@ -46,9 +46,9 @@
 #define MAXWORK		10
 
 void	wrapup(const char *);
-void	onalarm(int);
-void	pipeerr();
-void	grunt();
+__raw void	onalarm(int);
+__raw void	pipeerr();
+__raw void	grunt();
 void getwork(void);
 #if debug
 void dumpwork(void);
@@ -67,7 +67,7 @@ int	sigpipe;	/* pipe write error flag */
 
 struct st_work {
 	char	*cmd;		/* name of command to run */
-	char	* __raw*av;		/* arguments to command */
+	char	* __raw *av;		/* arguments to command */
 	char	*input;		/* standard input buffer */
 	int	inpsize;	/* size of standard input buffer */
 	char	*outf;		/* standard output (filename) */
@@ -84,7 +84,7 @@ struct {
 	int	thisjob;	/* current piece of work */
 } child[MAXCHILD], *cp;
 
-int main(int argc, char * __raw argv[])
+int main(int argc, const char* __raw argv[])
 {
     int		i;
     int		l;
@@ -396,21 +396,21 @@ bepatient:
     exit(0);
 }
 
-void onalarm(int foo)
+__raw void onalarm(int foo)
 {
     thres += est_rate;
     signal(SIGALRM, (__raw void (*)(int))onalarm);
     alarm(GRANULE);
 }
 
-void grunt()
+__raw void grunt()
 {
     /* timeout after label "bepatient" in main */
     exit_status = 4;
     wrapup("Timed out waiting for jobs to finish ...");
 }
 
-void pipeerr()
+__raw void pipeerr()
 {
 	sigpipe++;
 }
@@ -464,7 +464,7 @@ void getwork(void)
 	w->input = "";
 	/* start to build arg list */
 	ac = 2;
-	w->av = (char * __raw*)malloc(2*sizeof(char *));
+	w->av = (char * __raw *)malloc(2*sizeof(char *));
 	q = w->cmd;
 	while (*q) q++;
 	q--;
@@ -520,7 +520,7 @@ void getwork(void)
 	    else {
 		/* a command option */
 		ac++;
-		w->av = (char * __raw*)realloc(w->av, ac*sizeof(char *));
+		w->av = (char * __raw *)realloc(w->av, ac*sizeof(char *));
 		q = lp;
 		i = 1;
 		while (*lp && *lp != ' ') {

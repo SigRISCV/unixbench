@@ -31,12 +31,6 @@ unsigned long iter;
 char * __raw cmd_argv[28];
 int  cmd_argc;
 
-void report(void)
-{
-        fprintf(stderr,"COUNT|%lu|60|lpm\n", iter);
-	exit(0);
-}
-
 int main(int argc, char * __raw argv[])
 {
 int	slave, count, duration;
@@ -46,6 +40,12 @@ if (argc < 2)
 	{
 	fprintf(stderr,"Usage: %s duration command [args..]\n", argv[0]);
 	fprintf(stderr,"  duration in seconds\n");
+	exit(1);
+	}
+
+if (argc < 3)
+	{
+	fprintf(stderr,"%s: Missing command to execute\n", argv[0]);
 	exit(1);
 	}
 
@@ -69,7 +69,7 @@ exit(0);
 #endif
 
 iter = 0;
-wake_me(duration, report);
+wake_me(duration, minute_report);
 
 while (1)
 	{

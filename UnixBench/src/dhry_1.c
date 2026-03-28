@@ -40,14 +40,6 @@ char SCCSid[] = "@(#) @(#)dhry_1.c:3.4 -- 5/15/91 19:30:21";
 #include "dhry.h"
 #include "timeit.c"
 
-unsigned long Run_Index;
-
-void report()
-{
-	fprintf(stderr,"COUNT|%ld|1|lps\n", Run_Index);
-	exit(0);
-}
-
 /* Global Variables: */
 
 Rec_Pointer     Ptr_Glob,
@@ -168,8 +160,8 @@ int main(int argc, char * __raw argv[])
     }
 
   duration = atoi(argv[1]);
-  Run_Index = 0;
-  wake_me(duration, report);
+  iter = 0;
+  wake_me(duration, second_report);
 
   /***************/
   /* Start timer */
@@ -185,7 +177,7 @@ int main(int argc, char * __raw argv[])
 #endif
 #endif /* SELF_TIMED */
 
-  for (Run_Index = 1; ; ++Run_Index)
+  for (iter = 1; ; ++iter)
   {
 
     Proc_5();
@@ -217,8 +209,8 @@ int main(int argc, char * __raw argv[])
         {
         Proc_6 (Ident_1, &Enum_Loc);
         strcpy (Str_2_Loc, "DHRYSTONE PROGRAM, 3'RD STRING");
-        Int_2_Loc = Run_Index;
-        Int_Glob = Run_Index;
+        Int_2_Loc = iter;
+        Int_Glob = iter;
         }
     }
       /* Int_1_Loc == 3, Int_2_Loc == 3, Int_3_Loc == 7 */
@@ -229,7 +221,7 @@ int main(int argc, char * __raw argv[])
     Proc_2 (&Int_1_Loc);
       /* Int_1_Loc == 5 */
 
-  } /* loop "for Run_Index" */
+  } /* loop "for iter" */
 
   /**************/
   /* Stop timer */
