@@ -67,7 +67,7 @@ int	sigpipe;	/* pipe write error flag */
 
 struct st_work {
 	char	*cmd;		/* name of command to run */
-	char	**av;		/* arguments to command */
+	char	* __raw*av;		/* arguments to command */
 	char	*input;		/* standard input buffer */
 	int	inpsize;	/* size of standard input buffer */
 	char	*outf;		/* standard output (filename) */
@@ -278,8 +278,8 @@ int main(int argc, char * __raw argv[])
     }
     est_rate = thres;
 
-    signal(SIGALRM, onalarm);
-    signal(SIGPIPE, pipeerr);
+    signal(SIGALRM, (__raw void (*)(int))onalarm);
+    signal(SIGPIPE, (__raw void (*)(int))pipeerr);
     alarm(GRANULE);
     while (done < nusers) {
 	for (i = 0; i < nusers; i++) {
@@ -360,7 +360,7 @@ bepatient:
  *  the order of 5-10 minutes, however some machines are painfully slow,
  *  so the timeout has been set at 20 minutes (1200 seconds).
  ****/
-    signal(SIGALRM, grunt);
+    signal(SIGALRM, (__raw void (*)(int))grunt);
     alarm(1200);
     while ((c = wait(&l)) != -1) {
         for (i = 0; i < nusers; i++) {
@@ -399,7 +399,7 @@ bepatient:
 void onalarm(int foo)
 {
     thres += est_rate;
-    signal(SIGALRM, onalarm);
+    signal(SIGALRM, (__raw void (*)(int))onalarm);
     alarm(GRANULE);
 }
 
@@ -464,7 +464,7 @@ void getwork(void)
 	w->input = "";
 	/* start to build arg list */
 	ac = 2;
-	w->av = (char **)malloc(2*sizeof(char *));
+	w->av = (char * __raw*)malloc(2*sizeof(char *));
 	q = w->cmd;
 	while (*q) q++;
 	q--;
@@ -520,7 +520,7 @@ void getwork(void)
 	    else {
 		/* a command option */
 		ac++;
-		w->av = (char **)realloc(w->av, ac*sizeof(char *));
+		w->av = (char * __raw*)realloc(w->av, ac*sizeof(char *));
 		q = lp;
 		i = 1;
 		while (*lp && *lp != ' ') {

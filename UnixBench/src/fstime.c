@@ -197,7 +197,7 @@ int main(int argc, char * __raw argv[])
     for (i=0; i < bufsize; ++i)
             buf[i] = i & 0xff;
 
-    signal(SIGKILL,clean_up);
+    signal(SIGKILL,(__raw void (*)(int))clean_up);
 
     /*
      * Run the selected test.
@@ -274,7 +274,7 @@ int w_test(int timeSecs)
 
         /* Set an alarm. */
         sigalarm = 0;
-        signal(SIGALRM, stop_count);
+        signal(SIGALRM, (__raw void (*)(int))stop_count);
         alarm(timeSecs);
 
         start = getFloatTime();
@@ -331,7 +331,7 @@ int r_test(int timeSecs)
 
         /* Set an alarm. */
         sigalarm = 0;
-        signal(SIGALRM, stop_count);
+        signal(SIGALRM, (__raw void (*)(int))stop_count);
         alarm(timeSecs);
 
         start = getFloatTime();
@@ -395,7 +395,7 @@ int c_test(int timeSecs)
 
         /* Set an alarm. */
         sigalarm = 0;
-        signal(SIGALRM, stop_count);
+        signal(SIGALRM, (__raw void (*)(int))stop_count);
         alarm(timeSecs);
 
         start = getFloatTime();
