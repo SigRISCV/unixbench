@@ -31,76 +31,132 @@ void execute_task(Task task){
     fclose(log_fp);
 }
 
-#define TASK_NUM 9
-
 int main(){
     setenv("UB_BINDIR", ".", 1);
-    struct task task_list[TASK_NUM] = {
+    struct task task_list_user[] = {
         {
             .task_name = "dhrystone",
             .program_path = "./dhry2reg",
             .program_args = "10",
-            .sample_number = 8,
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "whetstone",
             .program_path = "./whetstone-double",
             .program_args = "2>&1",
-            .sample_number = 8,
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
+        {
+            .task_name = "register",
+            .program_path = "./register",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "short",
+            .program_path = "./short",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "int",
+            .program_path = "./int",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "long",
+            .program_path = "./long",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "float",
+            .program_path = "./float",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "double",
+            .program_path = "./double",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "hanoi",
+            .program_path = "./hanoi",
+            .program_args = "10",
+            .sample_number = 1,
+            .log_filename = "./unixbench.log"
+        },
+    };
+
+    struct task task_list_kernel[] = {
         {
             .task_name = "execl",
             .program_path = "./execl",
             .program_args = "30",
-            .sample_number = 3,
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "pipe",
             .program_path = "./pipe",
             .program_args = "10",
-            .sample_number = 8,
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "context",
             .program_path = "./context1",
             .program_args = "10",
-            .sample_number = 8,
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "spawn",
             .program_path = "./spawn",
-            .program_args = "30",
-            .sample_number = 3,
+            .program_args = "10",
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "syscall",
             .program_path = "./syscall",
             .program_args = "10",
-            .sample_number = 8,
+            .sample_number = 1,
             .log_filename = "./unixbench.log"
         },
-        {
-            .task_name = "shell1",
-            .program_path = "./looper",
-            .program_args = "60 ./multi.sh 1",
-            .sample_number = 3,
-            .log_filename = "./unixbench.log"
-        },
-        {
-            .task_name = "shell8",
-            .program_path = "./looper",
-            .program_args = "60 ./multi.sh 8",
-            .sample_number = 3,
-            .log_filename = "./unixbench.log"
-        },
+        // {
+        //     .task_name = "shell1",
+        //     .program_path = "./looper",
+        //     .program_args = "60 ./multi.sh 1",
+        //     .sample_number = 3,
+        //     .log_filename = "./unixbench.log"
+        // },
+        // {
+        //     .task_name = "shell8",
+        //     .program_path = "./looper",
+        //     .program_args = "60 ./multi.sh 8",
+        //     .sample_number = 3,
+        //     .log_filename = "./unixbench.log"
+        // },
     };
-    for(int i=0;i<TASK_NUM;i++){
-        execute_task(&task_list[i]);
+
+    int TASK_NUM_USER = sizeof(task_list_user) / sizeof(struct task);
+    for(int i=0;i<TASK_NUM_USER;i++){
+        execute_task(&task_list_user[i]);
+    }
+    int TASK_NUM_KERNEL = sizeof(task_list_kernel) / sizeof(struct task);
+    for(int i=0;i<TASK_NUM_KERNEL;i++){
+        execute_task(&task_list_kernel[i]);
     }
 }
