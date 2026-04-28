@@ -103,8 +103,8 @@ int main(int argc, char * __raw argv[])
                     fprintf(stderr,"%s: fork failed\n", argv[0]);
                     exit(1);
                 } else if (pid == 0) {
-                    execl("/bin/true", "/bin/true", (char *) 0);
-                    fprintf(stderr,"%s: exec /bin/true failed\n", argv[0]);
+                    execl("/usr/bin/true", "/usr/bin/true", (char *) 0);
+                    fprintf(stderr,"%s: exec /usr/bin/true failed\n", argv[0]);
                     exit(1);
                 } else {
                     if (waitpid(pid, NULL, 0) < 0) {
@@ -119,4 +119,3 @@ int main(int argc, char * __raw argv[])
 
         exit(9);
 }
-

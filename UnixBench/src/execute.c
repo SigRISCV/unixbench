@@ -11,8 +11,8 @@ typedef struct task{
 }* Task;
 
 void execute_task(Task task){
-    char command_buf[100];
-    sprintf(command_buf, "%s %s", task->program_path, task->program_args);
+    char command_buf[256];
+    snprintf(command_buf, sizeof(command_buf), "%s %s", task->program_path, task->program_args);
     __raw FILE* log_fp = fopen(task->log_filename, "a+");
     printf("execute %s\n", task->task_name);
     fprintf(log_fp, "execute %s\n", task->task_name);
@@ -38,63 +38,70 @@ int main(){
             .task_name = "dhrystone",
             .program_path = "./dhry2reg",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "whetstone",
             .program_path = "./whetstone-double",
             .program_args = "2>&1",
-            .sample_number = 1,
+            .sample_number = 6,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "arithoh",
+            .program_path = "./arithoh",
+            .program_args = "10",
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "register",
             .program_path = "./register",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "short",
             .program_path = "./short",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "int",
             .program_path = "./int",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "long",
             .program_path = "./long",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "float",
             .program_path = "./float",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "double",
             .program_path = "./double",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "hanoi",
             .program_path = "./hanoi",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
     };
@@ -104,51 +111,58 @@ int main(){
             .task_name = "execl",
             .program_path = "./execl",
             .program_args = "30",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
-            .task_name = "pipe",
-            .program_path = "./pipe",
-            .program_args = "10",
-            .sample_number = 1,
+            .task_name = "fstime",
+            .program_path = "./fstime",
+            .program_args = "-c -t 30 -d . -b 1024 -m 2000",
+            .sample_number = 6,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "fsdisk",
+            .program_path = "./fstime",
+            .program_args = "-c -t 30 -d . -b 4096 -m 8000",
+            .sample_number = 6,
+            .log_filename = "./unixbench.log"
+        },
+        {
+            .task_name = "fsbuffer",
+            .program_path = "./fstime",
+            .program_args = "-c -t 30 -d . -b 256 -m 500",
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "context",
             .program_path = "./context1",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "spawn",
             .program_path = "./spawn",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
         {
             .task_name = "syscall",
             .program_path = "./syscall",
             .program_args = "10",
-            .sample_number = 1,
+            .sample_number = 6,
             .log_filename = "./unixbench.log"
         },
-        // {
-        //     .task_name = "shell1",
-        //     .program_path = "./looper",
-        //     .program_args = "60 ./multi.sh 1",
-        //     .sample_number = 3,
-        //     .log_filename = "./unixbench.log"
-        // },
-        // {
-        //     .task_name = "shell8",
-        //     .program_path = "./looper",
-        //     .program_args = "60 ./multi.sh 8",
-        //     .sample_number = 3,
-        //     .log_filename = "./unixbench.log"
-        // },
+        {
+            .task_name = "sysexec",
+            .program_path = "./syscall",
+            .program_args = "10 exec",
+            .sample_number = 6,
+            .log_filename = "./unixbench.log"
+        },
     };
 
     int TASK_NUM_USER = sizeof(task_list_user) / sizeof(struct task);
